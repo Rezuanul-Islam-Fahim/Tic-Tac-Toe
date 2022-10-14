@@ -1,3 +1,6 @@
+from os import system
+
+
 board_items = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
 game_running = True
 
@@ -58,18 +61,21 @@ while game_running:
     print('\n')
     print_board()
     player1, player2 = choose_character_option()
+    system('cls')
     print(f'\n======= You have choosen: {player1} ========')
     print('Your turn first\n')
     board_ongoing = True
     steps = 0
 
     while board_ongoing:
+        print_board()
         pos = validate_get_position()
         board_items = update_board(
             pos,
             player1 if steps % 2 == 0 else player2,
             board_items
         )
+        system('cls')
         print_board()
         board_ongoing = False
         game_running = False
