@@ -77,6 +77,20 @@ def get_match_result(steps, player1, player2):
     return True
 
 
+# ============================
+# Continue confirmation
+def match_continiue_confirm(game_running):
+    confirm = ''
+
+    while confirm not in ['Y', 'N']:
+        confirm = input('\nDo you want to continue (Y, N): ')
+
+        if confirm not in ['Y', 'N']:
+            print('Please enter a valid input')
+
+    return True if confirm == 'Y' else False
+
+
 # ===============================
 # Main operation starts from here
 while game_running:
@@ -101,4 +115,5 @@ while game_running:
         print_board()
         board_ongoing = get_match_result(steps, player1, player2)
         steps += 1
-        system('cls')
+
+    game_running = match_continiue_confirm(game_running)
