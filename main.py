@@ -16,7 +16,7 @@ def choose_character_option():
     ch = ''
 
     while ch not in ['0', 'X']:
-        ch = input('Please enter you desired character (0 or X): ')
+        ch = input('\nPlease enter you desired character (0 or X): ')
 
         if ch not in ['0', 'X']:
             print('Please choose right option (0 or X)')
@@ -40,7 +40,7 @@ def validate_get_position():
 
     while pos not in range(1, 10):
         try:
-            pos = int(input('Enter a position: '))
+            pos = int(input('\nEnter a position: '))
         except:
             print('Please enter a valid input number between (1 - 9)')
             pos = None
@@ -54,6 +54,7 @@ def validate_get_position():
 # ===============================
 # Main operation starts from here
 while game_running:
+    print('\n')
     print_board(board_items)
     player1, player2 = choose_character_option()
     print(f'\n======= You have choosen: {player1} ========')
