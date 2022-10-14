@@ -100,6 +100,7 @@ def match_continiue_confirm(game_running):
 # ===============================
 # Main operation starts from here
 while game_running:
+    system('cls')
     print_board()
     player1, player2 = choose_character_option()
     system('cls')
