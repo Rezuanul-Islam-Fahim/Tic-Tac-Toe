@@ -39,12 +39,14 @@ def update_board(pos, player, board_items):
 
 # ===========================
 # Function for validating position
-def validate_get_position():
+def validate_get_position(steps):
     pos = -1
 
     while pos not in range(1, 10):
         try:
-            pos = int(input('\nEnter a position: '))
+            pos = int(
+                input(f'\nPlayer {1 if steps%2==0 else 2}, Enter a position: ')
+            )
         except:
             print('Please enter a valid input number between (1 - 9)')
             pos = None
@@ -53,6 +55,26 @@ def validate_get_position():
             print('Please enter a position between (1 - 9)')
 
     return pos
+
+
+# ================================
+# Function for getting match result
+def get_match_result(steps, player1, player2):
+    player_char = player1 if steps % 2 == 0 else player2
+    player = 'Player 1' if steps % 2 == 0 else 'Player 2'
+
+    if (board_items[0] == board_items[1] == board_items[2] == player_char or
+        board_items[3] == board_items[4] == board_items[5] == player_char or
+        board_items[6] == board_items[7] == board_items[8] == player_char or
+        board_items[0] == board_items[3] == board_items[6] == player_char or
+        board_items[1] == board_items[4] == board_items[7] == player_char or
+        board_items[2] == board_items[5] == board_items[8] == player_char or
+        board_items[0] == board_items[4] == board_items[8] == player_char or
+            board_items[2] == board_items[4] == board_items[6] == player_char):
+        print(f'{player} wins')
+        return False
+
+    return True
 
 
 # ===============================
@@ -69,7 +91,7 @@ while game_running:
 
     while board_ongoing:
         print_board()
-        pos = validate_get_position()
+        pos = validate_get_position(steps)
         board_items = update_board(
             pos,
             player1 if steps % 2 == 0 else player2,
@@ -77,5 +99,6 @@ while game_running:
         )
         system('cls')
         print_board()
-        board_ongoing = False
-        game_running = False
+        board_ongoing = get_match_result(steps, player1, player2)
+        steps += 1
+        system('cls')
