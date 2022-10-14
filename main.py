@@ -4,7 +4,7 @@ game_running = True
 
 # =============================
 # Function for printing the board
-def print_board(board_items):
+def print_board():
     print(board_items[6] + '|' + board_items[7] + '|' + board_items[8])
     print(board_items[3] + '|' + board_items[4] + '|' + board_items[5])
     print(board_items[0] + '|' + board_items[1] + '|' + board_items[2])
@@ -29,8 +29,9 @@ def choose_character_option():
 
 # ==========================
 # Function for adding char to a position
-def update_board():
-    pass
+def update_board(pos, player, board_items):
+    board_items[pos-1] = player
+    return board_items
 
 
 # ===========================
@@ -55,11 +56,20 @@ def validate_get_position():
 # Main operation starts from here
 while game_running:
     print('\n')
-    print_board(board_items)
+    print_board()
     player1, player2 = choose_character_option()
     print(f'\n======= You have choosen: {player1} ========')
     print('Your turn first\n')
     board_ongoing = True
+    steps = 0
 
     while board_ongoing:
         pos = validate_get_position()
+        board_items = update_board(
+            pos,
+            player1 if steps % 2 == 0 else player2,
+            board_items
+        )
+        print_board()
+        board_ongoing = False
+        game_running = False
