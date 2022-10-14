@@ -39,10 +39,10 @@ def update_board(pos, player, board_items):
 
 # ===========================
 # Function for validating position
-def validate_get_position(steps):
+def validate_get_position(steps, board_items):
     pos = -1
 
-    while pos not in range(1, 10):
+    while pos not in range(1, 10) or not board_items[pos-1] == '-':
         try:
             pos = int(
                 input(f'\nPlayer {1 if steps%2==0 else 2}, Enter a position: ')
@@ -53,6 +53,8 @@ def validate_get_position(steps):
 
         if not pos == None and pos not in range(1, 10):
             print('Please enter a position between (1 - 9)')
+        elif not pos == None and not board_items[pos-1] == '-':
+            print(f'Position {pos} is already occupied')
 
     return pos
 
@@ -74,7 +76,7 @@ def get_match_result(steps, player1, player2):
         print(
             f'=========================\n\t{player} wins\n=========================')
         return False
-    elif steps == 8:
+    elif steps == len(board_items) - 1:
         print('\n======= Match Draw ========')
         return False
 
@@ -98,7 +100,6 @@ def match_continiue_confirm(game_running):
 # ===============================
 # Main operation starts from here
 while game_running:
-    print('\n')
     print_board()
     player1, player2 = choose_character_option()
     system('cls')
@@ -112,7 +113,7 @@ while game_running:
             system('cls')
 
         print_board()
-        pos = validate_get_position(steps)
+        pos = validate_get_position(steps, board_items)
         board_items = update_board(
             pos,
             player1 if steps % 2 == 0 else player2,
