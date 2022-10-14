@@ -1,13 +1,9 @@
 from os import system
 
 
-board_items = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
-game_running = True
-
-
 # =============================
 # Function for printing the board
-def print_board():
+def print_board(board_items):
     print(board_items[6] + '|' + board_items[7] + '|' + board_items[8])
     print(board_items[3] + '|' + board_items[4] + '|' + board_items[5])
     print(board_items[0] + '|' + board_items[1] + '|' + board_items[2])
@@ -24,10 +20,7 @@ def choose_character_option():
         if ch not in ['0', 'X']:
             print('Please choose right option (0 or X)')
 
-    if ch == 'X':
-        return ('X', '0')
-    else:
-        return ('0', 'X')
+    return ('X', '0') if ch == 'X' else ('0', 'X')
 
 
 # ==========================
@@ -40,9 +33,9 @@ def update_board(pos, player, board_items):
 # ===========================
 # Function for validating position
 def validate_get_position(steps, board_items):
-    pos = -1
+    pos = 0
 
-    while pos not in range(1, 10) or not board_items[pos-1] == '-':
+    while not (pos in range(1, 10) and board_items[pos-1] == '-'):
         try:
             pos = int(
                 input(f'\nPlayer {1 if steps%2==0 else 2}, Enter a position: ')
@@ -51,9 +44,9 @@ def validate_get_position(steps, board_items):
             print('Please enter a valid input number between (1 - 9)')
             pos = None
 
-        if not pos == None and pos not in range(1, 10):
+        if not (pos == None or pos in range(1, 10)):
             print('Please enter a position between (1 - 9)')
-        elif not pos == None and not board_items[pos-1] == '-':
+        elif not (pos == None or board_items[pos-1] == '-'):
             print(f'Position {pos} is already occupied')
 
     return pos
@@ -85,7 +78,7 @@ def get_match_result(steps, player1, player2):
 
 # ============================
 # Continue confirmation
-def match_continiue_confirm(game_running):
+def match_continiue_confirm():
     confirm = ''
 
     while confirm not in ['Y', 'N']:
@@ -99,21 +92,21 @@ def match_continiue_confirm(game_running):
 
 # ===============================
 # Main operation starts from here
-while game_running:
+while True:
+    board_items = ['-']*9
     system('cls')
-    print_board()
+    print_board(board_items)
     player1, player2 = choose_character_option()
     system('cls')
     print(f'\n======= You have choosen: {player1} ========')
     print('Your turn first\n')
-    board_ongoing = True
     steps = 0
 
-    while board_ongoing:
+    while True:
         if not steps == 0:
             system('cls')
 
-        print_board()
+        print_board(board_items)
         pos = validate_get_position(steps, board_items)
         board_items = update_board(
             pos,
@@ -121,11 +114,12 @@ while game_running:
             board_items
         )
         system('cls')
-        print_board()
-        board_ongoing = get_match_result(steps, player1, player2)
+        print_board(board_items)
+
+        if not get_match_result(steps, player1, player2):
+            break
+
         steps += 1
 
-    game_running = match_continiue_confirm(game_running)
-    if game_running:
-        board_items = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
-        system('cls')
+    if not match_continiue_confirm():
+        break
