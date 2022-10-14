@@ -74,6 +74,9 @@ def get_match_result(steps, player1, player2):
         print(
             f'=========================\n\t{player} wins\n=========================')
         return False
+    elif steps == 8:
+        print('\n======= Match Draw ========')
+        return False
 
     return True
 
