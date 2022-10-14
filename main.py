@@ -117,3 +117,5 @@ while game_running:
         steps += 1
 
     game_running = match_continiue_confirm(game_running)
+    if game_running:
+        board_items = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
