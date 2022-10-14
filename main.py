@@ -71,7 +71,8 @@ def get_match_result(steps, player1, player2):
         board_items[2] == board_items[5] == board_items[8] == player_char or
         board_items[0] == board_items[4] == board_items[8] == player_char or
             board_items[2] == board_items[4] == board_items[6] == player_char):
-        print(f'{player} wins')
+        print(
+            f'=========================\n\t{player} wins\n=========================')
         return False
 
     return True
@@ -104,6 +105,9 @@ while game_running:
     steps = 0
 
     while board_ongoing:
+        if not steps == 0:
+            system('cls')
+
         print_board()
         pos = validate_get_position(steps)
         board_items = update_board(
@@ -119,3 +123,4 @@ while game_running:
     game_running = match_continiue_confirm(game_running)
     if game_running:
         board_items = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+        system('cls')
